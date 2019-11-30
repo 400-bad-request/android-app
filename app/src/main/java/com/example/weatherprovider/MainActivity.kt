@@ -13,3 +13,4 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.viewPager);
     }
 }
+ 
