@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.weatherprovider.R
-import com.example.weatherprovider.model.Forecast
+import com.example.weatherprovider.model.ForecastLocation
 
 
 class ForecastFragment : Fragment() {
 
     companion object {
-        fun newInstance(forecast: Forecast) = ForecastFragment()
+        fun newInstance(forecast: ForecastLocation) = ForecastFragment()
     }
 
     private lateinit var viewModel: ForecastViewModel
