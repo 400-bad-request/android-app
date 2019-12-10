@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
-import com.example.weatherprovider.forecast.ForecastFragment
 import com.example.weatherprovider.forecast.ForecastPagerAdapter
 import com.example.weatherprovider.model.Location
 
