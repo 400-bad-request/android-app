@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Database(entities = [Location::class], version = 1, exportSchema = false)
@@ -19,7 +20,7 @@ abstract class AppDatabase : RoomDatabase() {
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
             INSTANCE?.let { database ->
-                scope.launch {
+                scope.launch(Dispatchers.IO) {
                     populateDatabase(database.locationDao())
                 }
             }
@@ -35,13 +36,11 @@ abstract class AppDatabase : RoomDatabase() {
             val location2 = Location(44418, "London")
             locationDAO.insert(location2)
 
-            println(locationDAO.getAll().toString());
+            println(locationDAO.getAll().toString())
         }
     }
 
     companion object {
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
