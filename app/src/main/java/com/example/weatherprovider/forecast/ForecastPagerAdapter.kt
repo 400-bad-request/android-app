@@ -10,10 +10,13 @@ class ForecastPagerAdapter(fragmentManager: FragmentManager) :
 
     val fragments: MutableList<Fragment> = ArrayList()
     val titles: MutableList<String> = ArrayList()
+    val ids: MutableList<Int> = ArrayList()
 
-    fun addFragment(fragment: Fragment, title: String) {
-        fragments.add(fragment)
+    fun addFragment(woeid: Int, title: String) {
+        if (ids.contains(woeid)) return
+        fragments.add(ForecastFragment.newInstance(woeid, title))
         titles.add(title)
+        ids.add(woeid)
     }
 
     override fun getItem(p0: Int): Fragment = fragments[p0]
@@ -27,5 +30,4 @@ class ForecastPagerAdapter(fragmentManager: FragmentManager) :
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         super.destroyItem(container, position, `object`)
     }
-
 }

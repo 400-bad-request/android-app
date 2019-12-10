@@ -35,8 +35,6 @@ abstract class AppDatabase : RoomDatabase() {
             locationDAO.insert(location1)
             val location2 = Location(44418, "London")
             locationDAO.insert(location2)
-
-            println(locationDAO.getAll().toString())
         }
     }
 

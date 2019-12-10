@@ -11,13 +11,13 @@ import com.example.weatherprovider.R
 
 class ForecastFragment : Fragment() {
     // Store instance variables
-    private var title: String? = null
+    private var cityName: String? = null
     private var woeid: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        woeid = arguments?.getInt("someInt", 0)
-        title = arguments?.getString("someTitle")
+        woeid = arguments?.getInt("woeid", 0)
+        cityName = arguments?.getString("cityName")
     }
 
     override fun onCreateView(
@@ -32,11 +32,11 @@ class ForecastFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(page: Int, title: String): ForecastFragment {
+        fun newInstance(woeid: Int, cityName: String): ForecastFragment {
             val fragmentFirst = ForecastFragment()
             val args = Bundle()
-            args.putInt("someInt", page)
-            args.putString("someTitle", title)
+            args.putInt("woeid", woeid)
+            args.putString("cityName", cityName)
             fragmentFirst.setArguments(args)
             return fragmentFirst
         }
