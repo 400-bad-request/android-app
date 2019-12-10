@@ -8,20 +8,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
-import com.example.weatherprovider.forecast.ForecastPagerAdapter
-import com.example.weatherprovider.model.Location
+import com.example.weatherprovider.citySearch.CitySearchActivity
+import com.example.weatherprovider.location.LocationPagerAdapter
+import com.example.weatherprovider.location.Location
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var pagerAdapter: ForecastPagerAdapter
+    private lateinit var pagerAdapter: LocationPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewPager = findViewById(R.id.viewPager)
-        pagerAdapter = ForecastPagerAdapter(supportFragmentManager)
+        pagerAdapter = LocationPagerAdapter(supportFragmentManager)
         viewPager.adapter = pagerAdapter
 
         mainViewModel = ViewModelProviders.of(this)[MainViewModel::class.java]

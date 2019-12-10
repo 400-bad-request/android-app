@@ -1,4 +1,4 @@
-package com.example.weatherprovider.model
+package com.example.weatherprovider.location
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

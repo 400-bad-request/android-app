@@ -1,7 +1,8 @@
-package com.example.weatherprovider
+package com.example.weatherprovider.citySearch
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.weatherprovider.R
 
 class CitySearchActivity : AppCompatActivity() {
 

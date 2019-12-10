@@ -4,9 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.weatherprovider.model.AppDatabase
-import com.example.weatherprovider.model.Location
-import com.example.weatherprovider.model.LocationRepository
+import com.example.weatherprovider.location.Location
+import com.example.weatherprovider.location.LocationRepository
 import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {

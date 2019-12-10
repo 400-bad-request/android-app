@@ -1,4 +1,4 @@
-package com.example.weatherprovider.forecast
+package com.example.weatherprovider.location
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.example.weatherprovider.R
 
 
-class ForecastFragment : Fragment() {
+class LocationFragment : Fragment() {
     // Store instance variables
     private var cityName: String? = null
     private var woeid: Int? = 0
@@ -25,15 +25,15 @@ class ForecastFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.weather_forecast_fragment, container, false)
+        val view = inflater.inflate(R.layout.fragment_location_forecast, container, false)
         val woeidLabel = view.findViewById(R.id.woeid_text) as TextView
         woeidLabel.text = woeid.toString()
         return view
     }
 
     companion object {
-        fun newInstance(woeid: Int, cityName: String): ForecastFragment {
-            val fragmentFirst = ForecastFragment()
+        fun newInstance(woeid: Int, cityName: String): LocationFragment {
+            val fragmentFirst = LocationFragment()
             val args = Bundle()
             args.putInt("woeid", woeid)
             args.putString("cityName", cityName)

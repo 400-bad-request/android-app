@@ -1,11 +1,11 @@
-package com.example.weatherprovider.forecast
+package com.example.weatherprovider.location
 
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-class ForecastPagerAdapter(fragmentManager: FragmentManager) :
+class LocationPagerAdapter(fragmentManager: FragmentManager) :
     FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     val fragments: MutableList<Fragment> = ArrayList()
@@ -14,7 +14,7 @@ class ForecastPagerAdapter(fragmentManager: FragmentManager) :
 
     fun addFragment(woeid: Int, title: String) {
         if (ids.contains(woeid)) return
-        fragments.add(ForecastFragment.newInstance(woeid, title))
+        fragments.add(LocationFragment.newInstance(woeid, title))
         titles.add(title)
         ids.add(woeid)
     }

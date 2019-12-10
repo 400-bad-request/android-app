@@ -1,10 +1,12 @@
-package com.example.weatherprovider.model;
+package com.example.weatherprovider;
 
 import android.content.Context
 import androidx.room.Database;
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.weatherprovider.location.Location
+import com.example.weatherprovider.location.LocationDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,7 +56,11 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "word_database"
                 )
-                    .addCallback(AppDatabaseCallback(scope))
+                    .addCallback(
+                        AppDatabaseCallback(
+                            scope
+                        )
+                    )
                     .build()
                 INSTANCE = instance
                 // return instance
