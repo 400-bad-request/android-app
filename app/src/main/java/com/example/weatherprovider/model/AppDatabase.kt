@@ -8,9 +8,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [ForecastLocation::class], version = 1)
+@Database(entities = [Location::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun locationDao(): ForecastLocationDAO
+    abstract fun locationDao(): LocationDAO
 
     private class AppDatabaseCallback(
         private val scope: CoroutineScope
@@ -25,14 +25,14 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateDatabase(locationDAO: ForecastLocationDAO) {
+        suspend fun populateDatabase(locationDAO: LocationDAO) {
             // Delete all content here.
             locationDAO.deleteAll()
 
             // Add sample words.
-            val location1 = ForecastLocation(2487956, "San Francisco")
+            val location1 = Location(2487956, "San Francisco")
             locationDAO.insert(location1)
-            val location2 = ForecastLocation(44418, "London")
+            val location2 = Location(44418, "London")
             locationDAO.insert(location2)
 
             println(locationDAO.getAll().toString());
@@ -46,21 +46,22 @@ abstract class AppDatabase : RoomDatabase() {
         private var INSTANCE: AppDatabase? = null
 
         fun getDatabase(
-            context: Context, scope: CoroutineScope
+            context: Context,
+            scope: CoroutineScope
         ): AppDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
+            // if the INSTANCE is not null, then return it,
+            // if it is, then create the database
+            return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "app_database"
-                ).build()
+                    "word_database"
+                )
+                    .addCallback(AppDatabaseCallback(scope))
+                    .build()
                 INSTANCE = instance
-
-                return instance
+                // return instance
+                instance
             }
         }
     }
