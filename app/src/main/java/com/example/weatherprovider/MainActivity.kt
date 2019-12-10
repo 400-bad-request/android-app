@@ -16,14 +16,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewPager = findViewById(R.id.viewPager)
-//        adapter = new ForecastPagerAdapter()
-//        viewPager.adapter =
-
-        val model = ViewModelProviders.of(this)[ForecastViewModel::class.java]
-        model.allLocations.observe(this, Observer<List<ForecastLocation>>{ locations ->
-//            viewPager.
-            println(locations)
-        })
     }
 }
  
