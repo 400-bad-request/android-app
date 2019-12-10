@@ -1,22 +1,31 @@
 package com.example.weatherprovider.forecast
 
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import com.example.weatherprovider.model.ForecastLocation
+import androidx.fragment.app.FragmentPagerAdapter
 
-class ForecastPagerAdapter(
-    fragmentManager: FragmentManager,
-    private val forecasts: ArrayList<ForecastLocation>
-) :
-    FragmentStatePagerAdapter(fragmentManager) {
+class ForecastPagerAdapter(fragmentManager: FragmentManager) :
+    FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    override fun getItem(position: Int): Fragment {
-        return ForecastFragment.newInstance(forecasts[position])
+    val fragments: MutableList<Fragment> = ArrayList()
+    val titles: MutableList<String> = ArrayList()
+
+    fun addFragment(fragment: Fragment, title: String) {
+        fragments.add(fragment)
+        titles.add(title)
     }
 
-    // 3
-    override fun getCount(): Int {
-        return forecasts.size
+    override fun getItem(p0: Int): Fragment = fragments[p0]
+
+    override fun getCount(): Int = fragments.size
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        return titles[position]
     }
+
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        super.destroyItem(container, position, `object`)
+    }
+
 }
