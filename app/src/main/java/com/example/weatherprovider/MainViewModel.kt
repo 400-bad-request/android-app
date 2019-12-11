@@ -1,21 +1,20 @@
-package com.example.weatherprovider.forecast
+package com.example.weatherprovider
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.weatherprovider.model.AppDatabase
-import com.example.weatherprovider.model.ForecastLocation
-import com.example.weatherprovider.model.ForecastLocationRepository
+import com.example.weatherprovider.location.Location
+import com.example.weatherprovider.location.LocationRepository
 import kotlinx.coroutines.launch
 
-class ForecastViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: ForecastLocationRepository
-    val allLocations: LiveData<List<ForecastLocation>>
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: LocationRepository
+    val allLocations: LiveData<List<Location>>
 
     init {
         val locationDao = AppDatabase.getDatabase(application, viewModelScope).locationDao()
-        repository = ForecastLocationRepository(locationDao)
+        repository = LocationRepository(locationDao)
         allLocations = repository.allLocations
     }
 
@@ -26,7 +25,8 @@ class ForecastViewModel(application: Application) : AndroidViewModel(application
      * ViewModels have a coroutine scope based on their lifecycle called
      * viewModelScope which we can use here.
      */
-    fun insert(location: ForecastLocation) = viewModelScope.launch {
+    fun insert(location: Location) = viewModelScope.launch {
         repository.insert(location)
+
     }
 }

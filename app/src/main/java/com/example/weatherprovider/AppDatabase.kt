@@ -1,16 +1,19 @@
-package com.example.weatherprovider.model;
+package com.example.weatherprovider;
 
 import android.content.Context
 import androidx.room.Database;
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.weatherprovider.location.Location
+import com.example.weatherprovider.location.LocationDAO
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [ForecastLocation::class], version = 1)
+@Database(entities = [Location::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun locationDao(): ForecastLocationDAO
+    abstract fun locationDao(): LocationDAO
 
     private class AppDatabaseCallback(
         private val scope: CoroutineScope
@@ -19,48 +22,46 @@ abstract class AppDatabase : RoomDatabase() {
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
             INSTANCE?.let { database ->
-                scope.launch {
+                scope.launch(Dispatchers.IO) {
                     populateDatabase(database.locationDao())
                 }
             }
         }
 
-        suspend fun populateDatabase(locationDAO: ForecastLocationDAO) {
-            // Delete all content here.
-            locationDAO.deleteAll()
-
+        fun populateDatabase(locationDAO: LocationDAO) {
             // Add sample words.
-            val location1 = ForecastLocation(2487956, "San Francisco")
+            val location1 = Location(2487956, "San Francisco")
             locationDAO.insert(location1)
-            val location2 = ForecastLocation(44418, "London")
+            val location2 = Location(44418, "London")
             locationDAO.insert(location2)
-
-            println(locationDAO.getAll().toString());
         }
     }
 
     companion object {
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
         fun getDatabase(
-            context: Context, scope: CoroutineScope
+            context: Context,
+            scope: CoroutineScope
         ): AppDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
+            // if the INSTANCE is not null, then return it,
+            // if it is, then create the database
+            return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "app_database"
-                ).build()
+                    "word_database"
+                )
+                    .addCallback(
+                        AppDatabaseCallback(
+                            scope
+                        )
+                    )
+                    .build()
                 INSTANCE = instance
-
-                return instance
+                // return instance
+                instance
             }
         }
     }
