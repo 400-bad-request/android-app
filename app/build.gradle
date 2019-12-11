@@ -12,7 +12,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.onSuccessfulSearchCallback.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -34,8 +34,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.onSuccessfulSearchCallback.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.onSuccessfulSearchCallback.espresso:espresso-core:3.2.0'
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
@@ -49,4 +49,11 @@ dependencies {
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
     implementation 'com.google.android.material:material:1.1.0-beta01'
+    // Recycler view
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    // API calls and deserialization
+    implementation 'com.github.kittinunf.fuel:fuel:2.2.1'           //Core package
+    implementation 'com.github.kittinunf.fuel:fuel-android:2.2.1'   //Android
+    implementation 'com.github.kittinunf.fuel:fuel-gson:2.2.1'      //Fuel Gson
+    implementation 'com.google.code.gson:gson:2.8.5'                //Gson
 }
