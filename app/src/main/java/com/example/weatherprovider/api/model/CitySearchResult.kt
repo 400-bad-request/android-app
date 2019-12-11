@@ -1,4 +1,4 @@
-package com.example.weatherprovider.model
+package com.example.weatherprovider.api.model
 
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson

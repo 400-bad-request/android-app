@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherprovider.R
 import com.example.weatherprovider.api.CitySearchAPI
+import com.example.weatherprovider.api.model.CitySearchResult
 import kotlinx.android.synthetic.main.city_search_list_child.view.*
 
 class CitySearchActivity : AppCompatActivity() {
@@ -37,14 +38,16 @@ class CitySearchActivity : AppCompatActivity() {
 
         if (searchItem != null) {
             val searchView = searchItem.actionView as SearchView
+
             searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText!!.isNotEmpty()) {
-                        println(CitySearchAPI.getCitiesAsync(newText))
+                        println(CitySearchAPI.getCitiesAsync(newText, test))
                     }
                     return true
                 }
@@ -52,6 +55,12 @@ class CitySearchActivity : AppCompatActivity() {
         }
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    val test: (data: List<CitySearchResult>) -> Unit = { data ->
+        citiesSearchResults.clear()
+        citiesSearchResults.addAll(data.map { item -> item.title })
+        cityList.adapter?.notifyDataSetChanged()
     }
 
     class CityAdapter(items: List<String>, ctx: Context): RecyclerView.Adapter<CityAdapter.ViewHolder>() {

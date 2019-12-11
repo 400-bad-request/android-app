@@ -1,12 +1,12 @@
 package com.example.weatherprovider.api
 
-import com.example.weatherprovider.model.CitySearchResult
+import com.example.weatherprovider.api.model.CitySearchResult
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result;
 
 class CitySearchAPI {
     companion object {
-        fun getCitiesAsync(query: String): ArrayList<CitySearchResult> {
+        fun getCitiesAsync(query: String, onSuccess: (data: ArrayList<CitySearchResult>) -> Unit) {
             val URL = "https://www.metaweather.com/api/location/search/?query=$query"
             val citySearchResults = ArrayList<CitySearchResult>()
 
@@ -17,11 +17,10 @@ class CitySearchAPI {
                         data?.forEach { entry ->
                             citySearchResults.add(entry)
                         }
-                        println(citySearchResults)
+                        onSuccess(citySearchResults)
                     }
                 }
             }
-            return citySearchResults
         }
     }
 }
