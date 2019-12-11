@@ -10,7 +10,7 @@ class LocationRepository(private val locationDAO: LocationDAO) {
     // Observed LiveData will notify the observer when the data has changed.
     val allLocations: LiveData<List<Location>> = locationDAO.getAll()
 
-    suspend fun insert(location: Location) {
+    fun insert(location: Location) {
         locationDAO.insert(location)
     }
 }

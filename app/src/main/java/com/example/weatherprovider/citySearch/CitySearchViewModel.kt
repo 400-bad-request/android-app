@@ -1,21 +1,20 @@
-package com.example.weatherprovider
+package com.example.weatherprovider.citySearch
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.weatherprovider.AppDatabase
 import com.example.weatherprovider.location.Location
 import com.example.weatherprovider.location.LocationRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class CitySearchViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: LocationRepository
-    val allLocations: LiveData<List<Location>>
 
     init {
         val locationDao = AppDatabase.getDatabase(application, viewModelScope).locationDao()
         repository = LocationRepository(locationDao)
-        allLocations = repository.allLocations
     }
 
     /**
@@ -25,8 +24,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      * ViewModels have a coroutine scope based on their lifecycle called
      * viewModelScope which we can use here.
      */
-    fun insert(location: Location) = viewModelScope.launch {
-        repository.insert(location)
-
+    fun insert(woeid: Int, cityName: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val location = Location(woeid, cityName)
+            repository.insert(location)
+        }
     }
 }

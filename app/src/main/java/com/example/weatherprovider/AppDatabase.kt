@@ -28,10 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateDatabase(locationDAO: LocationDAO) {
-            // Delete all content here.
-            locationDAO.deleteAll()
-
+        fun populateDatabase(locationDAO: LocationDAO) {
             // Add sample words.
             val location1 = Location(2487956, "San Francisco")
             locationDAO.insert(location1)
