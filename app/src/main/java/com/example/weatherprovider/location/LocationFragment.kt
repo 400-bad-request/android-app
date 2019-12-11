@@ -11,12 +11,11 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherprovider.R
 import com.example.weatherprovider.api.WeatherSearchAPI
-import com.example.weatherprovider.api.model.CitySearchResult
 import com.example.weatherprovider.api.model.WeatherSearchResult
 import java.net.URL
+import kotlin.math.round
 
 
 class LocationFragment : Fragment() {
@@ -25,9 +24,12 @@ class LocationFragment : Fragment() {
     private var woeid: Int? = 0
     private var weatherData: WeatherSearchResult? = null
 
-    private lateinit var cityNameLabel: TextView
-    private lateinit var cityParentNameLabel: TextView
     private lateinit var weatherImageAvatar: ImageView
+
+    private lateinit var minTemperatureValue: TextView
+    private lateinit var maxTemperatureValue: TextView
+    private lateinit var windSpeedValue: TextView
+    private lateinit var windDirectionValue: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +47,13 @@ class LocationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_location_forecast, container, false)
-        cityNameLabel = view.findViewById(R.id.city_name) as TextView
-        cityParentNameLabel = view.findViewById(R.id.city_parent_name) as TextView
+
         weatherImageAvatar = view.findViewById(R.id.weather_image_avatar) as ImageView
+
+        minTemperatureValue = view.findViewById(R.id.min_temperature_value) as TextView
+        maxTemperatureValue = view.findViewById(R.id.max_temperature_value) as TextView
+        windSpeedValue = view.findViewById(R.id.wind_speed_value) as TextView
+        windDirectionValue = view.findViewById(R.id.wind_direction_value) as TextView
 
         if (weatherData !== null) {
             applyDataOnView(weatherData)
@@ -62,11 +68,19 @@ class LocationFragment : Fragment() {
     }
 
     val applyDataOnView: (data: WeatherSearchResult?) -> Unit = { data ->
-        cityNameLabel.text = data?.title
-        cityParentNameLabel.text = data?.parent?.title
-
         val currentWeather = data?.consolidated_weather?.first()
         DownLoadImageTask(weatherImageAvatar).execute("https://www.metaweather.com/static/img/weather/png/${currentWeather?.weather_state_abbr}.png")
+
+        minTemperatureValue.text = "${currentWeather?.min_temp?.round(1)} °C"
+        maxTemperatureValue.text = "${currentWeather?.max_temp?.round(1)} °C"
+        windSpeedValue.text = "${currentWeather?.wind_speed?.round(2)} mph"
+        windDirectionValue.text = currentWeather?.wind_direction_compass
+    }
+
+    fun Float.round(decimals: Int): Double {
+        var multiplier = 1.0
+        repeat(decimals) { multiplier *= 10 }
+        return round(this * multiplier) / multiplier
     }
 
     private class DownLoadImageTask(internal val imageView: ImageView) : AsyncTask<String, Void, Bitmap?>() {
