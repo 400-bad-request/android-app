@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id = item!!.itemId
         if (id == R.id.add_button) {
-            println(CitySearchAPI.getCitiesAsync("lo"))
             val intent = Intent(this, CitySearchActivity::class.java).apply {}
             startActivity(intent)
             return true
