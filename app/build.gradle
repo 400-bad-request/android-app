@@ -34,8 +34,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.onSuccessfulSearchCallback.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.onSuccessfulSearchCallback.espresso:espresso-core:3.2.0'
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
