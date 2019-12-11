@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import com.example.weatherprovider.R
+import com.example.weatherprovider.api.WeatherSearchAPI
+import com.example.weatherprovider.api.model.CitySearchResult
+import com.example.weatherprovider.api.model.WeatherSearchResult
 
 
 class LocationFragment : Fragment() {
@@ -18,6 +21,10 @@ class LocationFragment : Fragment() {
         super.onCreate(savedInstanceState)
         woeid = arguments?.getInt("woeid", 0)
         cityName = arguments?.getString("cityName")
+
+        if (woeid !== null) {
+            WeatherSearchAPI.getWeatherAsync(woeid as Int, onSuccessfulSearchCallback)
+        }
     }
 
     override fun onCreateView(
@@ -29,6 +36,10 @@ class LocationFragment : Fragment() {
         val woeidLabel = view.findViewById(R.id.woeid_text) as TextView
         woeidLabel.text = woeid.toString()
         return view
+    }
+
+    val onSuccessfulSearchCallback: (data: WeatherSearchResult) -> Unit = { data ->
+        println(data)
     }
 
     companion object {
