@@ -30,6 +30,8 @@ class LocationFragment : Fragment() {
     private lateinit var maxTemperatureValue: TextView
     private lateinit var windSpeedValue: TextView
     private lateinit var windDirectionValue: TextView
+    private lateinit var airPressureValue: TextView
+    private lateinit var airHumidityValue: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +56,8 @@ class LocationFragment : Fragment() {
         maxTemperatureValue = view.findViewById(R.id.max_temperature_value) as TextView
         windSpeedValue = view.findViewById(R.id.wind_speed_value) as TextView
         windDirectionValue = view.findViewById(R.id.wind_direction_value) as TextView
+        airPressureValue = view.findViewById(R.id.air_pressure_value) as TextView
+        airHumidityValue = view.findViewById(R.id.air_kumidity_value) as TextView
 
         if (weatherData !== null) {
             applyDataOnView(weatherData)
@@ -75,6 +79,8 @@ class LocationFragment : Fragment() {
         maxTemperatureValue.text = "${currentWeather?.max_temp?.round(1)} °C"
         windSpeedValue.text = "${currentWeather?.wind_speed?.round(2)} mph"
         windDirectionValue.text = currentWeather?.wind_direction_compass
+        airPressureValue.text = "${currentWeather?.air_pressure} mbar"
+        airHumidityValue.text = "${currentWeather?.humidity} %"
     }
 
     fun Float.round(decimals: Int): Double {
