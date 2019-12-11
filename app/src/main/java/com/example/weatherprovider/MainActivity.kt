@@ -2,12 +2,14 @@ package com.example.weatherprovider
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
+import com.example.weatherprovider.api.CitySearchAPI
 import com.example.weatherprovider.citySearch.CitySearchActivity
 import com.example.weatherprovider.location.LocationPagerAdapter
 import com.example.weatherprovider.location.Location
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id = item!!.itemId
         if (id == R.id.add_button) {
+            println(CitySearchAPI.getCitiesAsync("lo"))
             val intent = Intent(this, CitySearchActivity::class.java).apply {}
             startActivity(intent)
             return true
